@@ -1,0 +1,43 @@
+sql {
+    # PostgreSQL driver
+    driver = "rlm_sql_postgresql"
+    dialect = "postgresql"
+
+    # Connection settings — use environment variables injected by Docker Compose
+    server = "${POSTGRES_HOST}"
+    port = ${POSTGRES_PORT}
+    login = "${POSTGRES_USER}"
+    password = "${POSTGRES_PASSWORD}"
+    radius_db = "${POSTGRES_DB}"
+
+    # Target the radius schema — FreeRADIUS tables live in radius.* not public.*
+    # This is the critical dual-schema setting (see ARCHITECTURE.md)
+    schema = "radius"
+
+    # Read NAS clients from the nas table at startup
+    # NOTE (CP-3): NAS changes require a full restart, NOT just HUP/reload
+    read_clients = yes
+    client_table = "nas"
+
+    # Use the default PostgreSQL query files from FreeRADIUS distribution
+    # These reference the correct PascalCase column names (UserName, not username)
+    # $INCLUDE ${modconfdir}/${.:name}/main/${dialect}/queries.conf
+
+    # Connection pool settings
+    pool {
+        # Number of connections to open at startup
+        start = 5
+        # Minimum open connections to keep alive
+        min = 4
+        # Maximum simultaneous connections
+        max = 10
+        # Number of idle connections to maintain
+        spare = 3
+        # Maximum queries per connection (0 = unlimited)
+        uses = 0
+        # Maximum connection lifetime in seconds (0 = unlimited)
+        lifetime = 0
+        # Idle timeout in seconds before connection is closed
+        idle_timeout = 60
+    }
+}
