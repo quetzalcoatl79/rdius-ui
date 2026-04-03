@@ -1,0 +1,196 @@
+services:
+
+  # ──────────────────────────────────────────────────────────────────
+  # PostgreSQL 16 — shared database for FreeRADIUS + application
+  # Init scripts run automatically via docker-entrypoint-initdb.d
+  # ──────────────────────────────────────────────────────────────────
+  postgres:
+    build:
+      context: ./infra/postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-radiusadmin} -d ${POSTGRES_DB:-radiusdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # Docker socket proxy — restricts Docker API access to backend
+  # Prevents full Docker socket exposure (see infra/socket-proxy/README.md)
+  # CP-4 prevention: backend uses tcp://socket-proxy:2375, NOT the raw socket
+  # ──────────────────────────────────────────────────────────────────
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:0.3.0
+    environment:
+      # Allow: container inspection and signals only
+      CONTAINERS: 1
+      POST: 1
+      KILL: 1
+      # Deny everything else
+      NETWORKS: 0
+      IMAGES: 0
+      VOLUMES: 0
+      AUTH: 0
+      SECRETS: 0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - socket-proxy-net
+    # expose port internally only — no ports: mapping to host
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # FreeRADIUS 3.2.3 — instance 1
+  # Ports: 1812/udp (auth), 1813/udp (accounting)
+  # ──────────────────────────────────────────────────────────────────
+  freeradius-1:
+    image: freeradius/freeradius-server:3.2.3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./infra/freeradius:/etc/freeradius/3.0:ro
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    labels:
+      radius-ui.managed: "true"
+      radius-ui.instance: "freeradius-1"
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # FreeRADIUS 3.2.3 — instance 2
+  # Ports: 1814/udp (auth), 1815/udp (accounting)
+  # ──────────────────────────────────────────────────────────────────
+  freeradius-2:
+    image: freeradius/freeradius-server:3.2.3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./infra/freeradius:/etc/freeradius/3.0:ro
+    ports:
+      - "1814:1812/udp"
+      - "1815:1813/udp"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    labels:
+      radius-ui.managed: "true"
+      radius-ui.instance: "freeradius-2"
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # FreeRADIUS 3.2.3 — instance 3
+  # Ports: 1816/udp (auth), 1817/udp (accounting)
+  # ──────────────────────────────────────────────────────────────────
+  freeradius-3:
+    image: freeradius/freeradius-server:3.2.3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./infra/freeradius:/etc/freeradius/3.0:ro
+    ports:
+      - "1816:1812/udp"
+      - "1817:1813/udp"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    labels:
+      radius-ui.managed: "true"
+      radius-ui.instance: "freeradius-3"
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # FastAPI Backend — placeholder (Dockerfile created in Plan 02)
+  # Routes ALL Docker API calls through socket-proxy, not raw socket
+  # ──────────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      socket-proxy:
+        condition: service_started
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-changeme-generate-with-openssl-rand-hex-32}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-15}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-7}
+      # Route Docker API through socket proxy — NOT raw socket mount
+      DOCKER_HOST: tcp://socket-proxy:2375
+    networks:
+      - radius-net
+      - socket-proxy-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # Next.js Frontend — placeholder (Dockerfile created in Plan 03)
+  # ──────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://backend:8000}
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+# ──────────────────────────────────────────────────────────────────
+# Named volumes
+# ──────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+
+# ──────────────────────────────────────────────────────────────────
+# Networks
+# radius-net      — internal network for all services
+# socket-proxy-net — isolated network: backend ↔ socket-proxy only
+#                    Backend never has raw Docker socket mounted
+# ──────────────────────────────────────────────────────────────────
+networks:
+  radius-net:
+    driver: bridge
+  socket-proxy-net:
+    driver: bridge
+    internal: true

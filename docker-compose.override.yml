@@ -1,0 +1,30 @@
+# Development overrides for docker-compose.yml
+# Applied automatically by `docker compose up` in development
+
+services:
+
+  postgres:
+    # Expose PostgreSQL port to host for direct DB access during dev
+    # (psql, DBeaver, pgAdmin, Alembic migrations, etc.)
+    ports:
+      - "5432:5432"
+
+  backend:
+    # Uvicorn with hot-reload for development
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    # Mount source code for hot-reload
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+
+  frontend:
+    # Next.js dev server with hot-reload
+    command: npm run dev
+    # Mount source code for hot-reload
+    volumes:
+      - ./frontend:/app
+      # Prevent node_modules from being overwritten by the volume mount
+      - /app/node_modules
+    ports:
+      - "3000:3000"
