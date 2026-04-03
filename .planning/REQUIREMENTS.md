@@ -11,22 +11,22 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **INFRA-01**: Docker Compose runs all services (frontend, backend, postgres, 3x freeradius, socket-proxy) with a single `docker compose up`
 - [ ] **INFRA-02**: PostgreSQL uses dual-schema design: `radius` schema (FreeRADIUS tables) and `app` schema (application tables)
-- [ ] **INFRA-03**: Alembic migrations only touch `app` schema — never modify FreeRADIUS tables
+- [x] **INFRA-03**: Alembic migrations only touch `app` schema — never modify FreeRADIUS tables
 - [ ] **INFRA-04**: Docker socket proxy restricts API to restart/kill signals on labeled FreeRADIUS containers only
 - [ ] **INFRA-05**: radacct table is partitioned by month from day one (pg_partman)
-- [ ] **INFRA-06**: Service startup orchestration ensures correct order: postgres → schema init → freeradius → backend → frontend
+- [x] **INFRA-06**: Service startup orchestration ensures correct order: postgres → schema init → freeradius → backend → frontend
 
 ### Authentication & Authorization
 
-- [ ] **AUTH-01**: User can log in with email and password
-- [ ] **AUTH-02**: User session persists across browser refresh (JWT access token in memory + refresh token in httpOnly cookie)
-- [ ] **AUTH-03**: User can log out from any page
-- [ ] **AUTH-04**: Super Admin can create/edit/delete application users and assign roles
-- [ ] **AUTH-05**: RBAC enforced on every API endpoint with 4 roles: Super Admin, Admin, Operator, Viewer
-- [ ] **AUTH-06**: Viewer has read-only access to dashboards and data
-- [ ] **AUTH-07**: Operator can manage RADIUS users/groups but not NAS or server config
-- [ ] **AUTH-08**: Admin has full access except application user management and server infrastructure
-- [ ] **AUTH-09**: Password stored with Argon2 hashing (pwdlib)
+- [x] **AUTH-01**: User can log in with email and password
+- [x] **AUTH-02**: User session persists across browser refresh (JWT access token in memory + refresh token in httpOnly cookie)
+- [x] **AUTH-03**: User can log out from any page
+- [x] **AUTH-04**: Super Admin can create/edit/delete application users and assign roles
+- [x] **AUTH-05**: RBAC enforced on every API endpoint with 4 roles: Super Admin, Admin, Operator, Viewer
+- [x] **AUTH-06**: Viewer has read-only access to dashboards and data
+- [x] **AUTH-07**: Operator can manage RADIUS users/groups but not NAS or server config
+- [x] **AUTH-08**: Admin has full access except application user management and server infrastructure
+- [x] **AUTH-09**: Password stored with Argon2 hashing (pwdlib)
 
 ### RADIUS User Management
 
@@ -151,19 +151,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | INFRA-01 | Phase 1 | Pending |
 | INFRA-02 | Phase 1 | Pending |
-| INFRA-03 | Phase 1 | Pending |
+| INFRA-03 | Phase 1 | Complete |
 | INFRA-04 | Phase 1 | Pending |
 | INFRA-05 | Phase 1 | Pending |
-| INFRA-06 | Phase 1 | Pending |
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| AUTH-05 | Phase 1 | Pending |
-| AUTH-06 | Phase 1 | Pending |
-| AUTH-07 | Phase 1 | Pending |
-| AUTH-08 | Phase 1 | Pending |
-| AUTH-09 | Phase 1 | Pending |
+| INFRA-06 | Phase 1 | Complete |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
+| AUTH-04 | Phase 1 | Complete |
+| AUTH-05 | Phase 1 | Complete |
+| AUTH-06 | Phase 1 | Complete |
+| AUTH-07 | Phase 1 | Complete |
+| AUTH-08 | Phase 1 | Complete |
+| AUTH-09 | Phase 1 | Complete |
 | USER-01 | Phase 2 | Pending |
 | USER-02 | Phase 2 | Pending |
 | USER-03 | Phase 2 | Pending |

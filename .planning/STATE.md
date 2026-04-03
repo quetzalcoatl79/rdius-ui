@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Roadmap created, ready for Phase 1 planning
-last_updated: "2026-04-03T16:22:18.211Z"
-last_activity: 2026-04-03 -- Phase 01 execution started
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-04-03T23:52:28.286Z"
+last_activity: 2026-04-03
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-03)
 ## Current Position
 
 Phase: 01 (foundation) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 01
-Last activity: 2026-04-03 -- Phase 01 execution started
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-03
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P02 | 57 | 2 tasks | 28 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 
 - [Roadmap]: 4-phase structure derived from 9 requirement categories grouped by delivery boundaries
 - [Roadmap]: UX requirements (UX-01 through UX-05) assigned to Phase 2 as cross-cutting quality bar for all UI work
+- [Phase 01]: PyJWT (not python-jose) for JWT; pwdlib[argon2] (not passlib) for hashing — both libraries are the current FastAPI recommendations
+- [Phase 01]: Alembic uses psycopg2 sync connection for migrations; main app uses asyncpg — asyncpg is incompatible with Alembic's sync runner
+- [Phase 01]: Tests use SQLite+ATTACH DATABASE to simulate app schema — no PostgreSQL required for CI
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-03
-Stopped at: Roadmap created, ready for Phase 1 planning
+Last session: 2026-04-03T23:52:28.278Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
