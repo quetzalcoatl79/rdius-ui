@@ -182,6 +182,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAS-03 | Phase 2 | Pending |
 | NAS-04 | Phase 2 | Pending |
 | NAS-05 | Phase 2 | Pending |
+| UX-01 | Phase 2 | Pending |
+| UX-02 | Phase 2 | Pending |
+| UX-03 | Phase 2 | Pending |
+| UX-04 | Phase 2 | Pending |
+| UX-05 | Phase 2 | Pending |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
@@ -203,17 +208,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUDIT-02 | Phase 4 | Pending |
 | AUDIT-03 | Phase 4 | Pending |
 | AUDIT-04 | Phase 4 | Pending |
-| UX-01 | Phase 2 | Pending |
-| UX-02 | Phase 2 | Pending |
-| UX-03 | Phase 2 | Pending |
-| UX-04 | Phase 2 | Pending |
-| UX-05 | Phase 2 | Pending |
 
 **Coverage:**
-- v1 requirements: 55 total
-- Mapped to phases: 55
+- v1 requirements: 59 total
+- Mapped to phases: 59
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-03*
-*Last updated: 2026-04-03 after initial definition*
+*Last updated: 2026-04-03 after roadmap creation*
