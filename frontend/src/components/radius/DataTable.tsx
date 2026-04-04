@@ -28,6 +28,7 @@ interface DataTableProps<T> {
   onPageChange: (page: number) => void;
   onSearch: (search: string) => void;
   searchPlaceholder?: string;
+  emptyMessage?: string;
   isLoading?: boolean;
   headerActions?: React.ReactNode;
   rowKey: (row: T) => string | number;
@@ -58,6 +59,7 @@ export function DataTable<T>({
   onPageChange,
   onSearch,
   searchPlaceholder = 'Rechercher...',
+  emptyMessage = 'Aucun résultat trouvé',
   isLoading = false,
   headerActions,
   rowKey,
@@ -109,7 +111,7 @@ export function DataTable<T>({
                 <TableCell colSpan={columns.length} className="h-32 text-center">
                   <div className="flex flex-col items-center gap-2 text-muted-foreground">
                     <Inbox className="h-8 w-8" />
-                    <span>Aucun résultat trouvé</span>
+                    <span>{emptyMessage}</span>
                   </div>
                 </TableCell>
               </TableRow>

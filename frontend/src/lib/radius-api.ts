@@ -261,3 +261,4 @@ export async function getNasSecret(id: number): Promise<{ secret: string }> {
   const res = await apiFetch(`/nas/${id}/secret`);
   return parseJson<{ secret: string }>(res);
 }
+
