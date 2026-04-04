@@ -83,7 +83,7 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 04-01-PLAN.md — Backend: server registry, Docker service control, audit trail (migration, models, services, endpoints)
+- [x] 04-01-PLAN.md — Backend: server registry, Docker service control, audit trail (migration, models, services, endpoints)
 - [ ] 04-02-PLAN.md — Frontend: server selector, server management pages, audit log viewer
 
 ## Progress

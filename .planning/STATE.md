@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 03-02-PLAN.md - Frontend observability layer
-last_updated: "2026-04-04T22:24:14.580Z"
+status: executing
+stopped_at: Completed 04-01-PLAN.md - Multi-server backend (registry, Docker service control, audit trail)
+last_updated: "2026-04-04T22:50:31.239Z"
 last_activity: 2026-04-04
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 10
+  completed_plans: 9
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-03)
 
 **Core value:** Network administrators can fully configure and monitor one or more FreeRADIUS servers without ever touching the CLI or editing configuration files.
-**Current focus:** Phase 03 — observability
+**Current focus:** Phase 04 — multi-server-operations
 
 ## Current Position
 
-Phase: 4
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 04 (multi-server-operations) — EXECUTING
+Plan: 2 of 2
+Status: Ready to execute
 Last activity: 2026-04-04
 
 Progress: [░░░░░░░░░░] 0%
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-core-radius-management P02 | 11 | 2 tasks | 27 files |
 | Phase 03-observability P01 | 7 | 2 tasks | 9 files |
 | Phase 03-observability P02 | 8 | 3 tasks | 12 files |
+| Phase 04 P01 | 4 | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,9 @@ Recent decisions affecting current work:
 - [Phase 03-02]: Native HTML <select> for status filter: base-ui Select requires multi-component composition, overkill for 3-option filter
 - [Phase 03-02]: Separate activeFilters state for accounting/postauth: only apply filters on Rechercher click, not on keystroke
 - [Phase 03-02]: format.ts shared utility: extracted formatDuration/formatBytes/formatDate to avoid duplication across log pages
+- [Phase 04]: AuditService.log() uses db.flush() not db.commit() — audit and data change commit in same transaction
+- [Phase 04]: DockerService identifies containers by radius-ui.instance label matching docker-compose.yml label pattern
+- [Phase 04]: Container restart uses t=10 for graceful FreeRADIUS shutdown; stats with stream=false avoids open connections
 
 ### Pending Todos
 
@@ -102,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-04T22:23:23.101Z
-Stopped at: Completed 03-02-PLAN.md - Frontend observability layer
+Last session: 2026-04-04T22:50:31.232Z
+Stopped at: Completed 04-01-PLAN.md - Multi-server backend (registry, Docker service control, audit trail)
 Resume file: None

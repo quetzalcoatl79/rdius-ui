@@ -74,19 +74,19 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Multi-Server Management
 
-- [ ] **SRV-01**: Admin can register multiple FreeRADIUS server instances in the application
+- [x] **SRV-01**: Admin can register multiple FreeRADIUS server instances in the application
 - [ ] **SRV-02**: UI shows a server selector to switch context between servers
-- [ ] **SRV-03**: All RADIUS data views (users, groups, NAS, logs, dashboard) are scoped to the selected server
-- [ ] **SRV-04**: Admin can restart or reload a FreeRADIUS server from the UI via Docker API
-- [ ] **SRV-05**: Admin can view server status (running/stopped, uptime, last restart)
-- [ ] **SRV-06**: Admin can view server health metrics (CPU, memory via Docker stats)
+- [x] **SRV-03**: All RADIUS data views (users, groups, NAS, logs, dashboard) are scoped to the selected server
+- [x] **SRV-04**: Admin can restart or reload a FreeRADIUS server from the UI via Docker API
+- [x] **SRV-05**: Admin can view server status (running/stopped, uptime, last restart)
+- [x] **SRV-06**: Admin can view server health metrics (CPU, memory via Docker stats)
 
 ### Audit Trail
 
-- [ ] **AUDIT-01**: Every admin action (create, update, delete) is logged with who, what, when
-- [ ] **AUDIT-02**: Audit log is stored in app schema (separate from FreeRADIUS tables)
-- [ ] **AUDIT-03**: Admin can view and filter audit logs by user, action type, date range
-- [ ] **AUDIT-04**: Service control actions (restart, reload) are logged in audit trail
+- [x] **AUDIT-01**: Every admin action (create, update, delete) is logged with who, what, when
+- [x] **AUDIT-02**: Audit log is stored in app schema (separate from FreeRADIUS tables)
+- [x] **AUDIT-03**: Admin can view and filter audit logs by user, action type, date range
+- [x] **AUDIT-04**: Service control actions (restart, reload) are logged in audit trail
 
 ### UI/UX
 
@@ -198,16 +198,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOG-03 | Phase 3 | Complete |
 | LOG-04 | Phase 3 | Complete |
 | LOG-05 | Phase 3 | Complete |
-| SRV-01 | Phase 4 | Pending |
+| SRV-01 | Phase 4 | Complete |
 | SRV-02 | Phase 4 | Pending |
-| SRV-03 | Phase 4 | Pending |
-| SRV-04 | Phase 4 | Pending |
-| SRV-05 | Phase 4 | Pending |
-| SRV-06 | Phase 4 | Pending |
-| AUDIT-01 | Phase 4 | Pending |
-| AUDIT-02 | Phase 4 | Pending |
-| AUDIT-03 | Phase 4 | Pending |
-| AUDIT-04 | Phase 4 | Pending |
+| SRV-03 | Phase 4 | Complete |
+| SRV-04 | Phase 4 | Complete |
+| SRV-05 | Phase 4 | Complete |
+| SRV-06 | Phase 4 | Complete |
+| AUDIT-01 | Phase 4 | Complete |
+| AUDIT-02 | Phase 4 | Complete |
+| AUDIT-03 | Phase 4 | Complete |
+| AUDIT-04 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 59 total
