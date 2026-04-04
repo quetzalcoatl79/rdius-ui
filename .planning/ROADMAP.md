@@ -63,13 +63,12 @@ Plans:
   2. Active sessions count updates in real-time via SSE without manual page refresh
   3. Administrator can browse accounting records and post-auth logs with filtering by user, NAS, date range, and status (Accept/Reject), with server-side pagination for large datasets
   4. Dashboard performance remains fast because metrics use pre-aggregated data (materialized views), never live radacct queries
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Backend: materialized views, dashboard metrics API, SSE endpoint, accounting/postauth log endpoints
+- [ ] 03-02-PLAN.md — Frontend: dashboard with Recharts charts, SSE real-time sessions, accounting/sessions/postauth log pages
 
 ### Phase 4: Multi-Server & Operations
 **Goal**: Administrators can manage multiple FreeRADIUS server instances from a single interface, control services remotely, and review a complete audit trail of all admin actions
@@ -94,7 +93,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/3 | In Progress|  |
-| 2. Core RADIUS Management | 1/3 | In Progress|  |
-| 3. Observability | 0/3 | Not started | - |
+| 1. Foundation | 3/3 | Complete |  |
+| 2. Core RADIUS Management | 3/3 | Complete |  |
+| 3. Observability | 0/2 | Planned | - |
 | 4. Multi-Server & Operations | 0/2 | Not started | - |
