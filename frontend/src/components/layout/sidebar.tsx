@@ -12,6 +12,8 @@ import {
   FileText,
   Settings,
   LogOut,
+  Activity,
+  ShieldCheck,
 } from 'lucide-react';
 
 const navItems = [
@@ -19,8 +21,13 @@ const navItems = [
   { href: '/users', label: 'Utilisateurs', icon: Users },
   { href: '/groups', label: 'Groupes', icon: Users2 },
   { href: '/nas', label: 'Équipements NAS', icon: Server },
-  { href: '/logs', label: 'Journaux', icon: FileText },
   { href: '/settings', label: 'Paramètres', icon: Settings },
+];
+
+const logItems = [
+  { href: '/logs', label: 'Comptabilité', icon: FileText },
+  { href: '/logs/sessions', label: 'Sessions actives', icon: Activity },
+  { href: '/logs/postauth', label: 'Post-auth', icon: ShieldCheck },
 ];
 
 export function Sidebar() {
@@ -60,6 +67,28 @@ export function Sidebar() {
             <span>{label}</span>
           </Link>
         ))}
+
+        {/* Journaux section */}
+        <div className="pt-2">
+          <p className="px-3 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Journaux
+          </p>
+          {logItems.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                isActive(href)
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              )}
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span>{label}</span>
+            </Link>
+          ))}
+        </div>
       </nav>
 
       {/* User info + logout */}
