@@ -90,10 +90,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### UI/UX
 
-- [ ] **UX-01**: Interface uses task-oriented workflows (e.g., "Add user" wizard) not raw table editing
+- [x] **UX-01**: Interface uses task-oriented workflows (e.g., "Add user" wizard) not raw table editing
 - [x] **UX-02**: Interface is responsive (works on tablet for field technicians)
 - [x] **UX-03**: Dark mode support
-- [ ] **UX-04**: Interface is in French by default (code and commits in English)
+- [x] **UX-04**: Interface is in French by default (code and commits in English)
 - [x] **UX-05**: All data tables support sorting, filtering, and server-side pagination
 
 ## v2 Requirements
@@ -182,10 +182,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAS-03 | Phase 2 | Complete |
 | NAS-04 | Phase 2 | Complete |
 | NAS-05 | Phase 2 | Complete |
-| UX-01 | Phase 2 | Pending |
+| UX-01 | Phase 2 | Complete |
 | UX-02 | Phase 2 | Complete |
 | UX-03 | Phase 2 | Complete |
-| UX-04 | Phase 2 | Pending |
+| UX-04 | Phase 2 | Complete |
 | UX-05 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |

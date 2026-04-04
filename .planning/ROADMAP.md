@@ -51,7 +51,7 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — FastAPI backend: RADIUS models, schemas with operator validation, service layer, REST endpoints
-- [ ] 02-02-PLAN.md — Frontend: TypeScript types, API client, Users/Groups/NAS management pages
+- [x] 02-02-PLAN.md — Frontend: TypeScript types, API client, Users/Groups/NAS management pages
 - [x] 02-03-PLAN.md — UX polish: dark mode, auth history, sessions, effective policy sub-pages
 
 ### Phase 3: Observability
