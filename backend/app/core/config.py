@@ -31,5 +31,8 @@ class Settings(BaseSettings):
     docker_socket_url: str = "http://docker-socket-proxy:2375"
     freeradius_container_label: str = "radius-ui.role=freeradius"
 
+    # Dashboard materialized view refresh interval (seconds)
+    materialized_view_refresh_seconds: int = 60
+
 
 settings = Settings()
