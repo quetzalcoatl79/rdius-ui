@@ -67,7 +67,7 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 03-01-PLAN.md — Backend: materialized views, dashboard metrics API, SSE endpoint, accounting/postauth log endpoints
+- [x] 03-01-PLAN.md — Backend: materialized views, dashboard metrics API, SSE endpoint, accounting/postauth log endpoints
 - [ ] 03-02-PLAN.md — Frontend: dashboard with Recharts charts, SSE real-time sessions, accounting/sessions/postauth log pages
 
 ### Phase 4: Multi-Server & Operations
@@ -95,5 +95,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete |  |
 | 2. Core RADIUS Management | 3/3 | Complete |  |
-| 3. Observability | 0/2 | Planned | - |
+| 3. Observability | 1/2 | In Progress|  |
 | 4. Multi-Server & Operations | 0/2 | Not started | - |

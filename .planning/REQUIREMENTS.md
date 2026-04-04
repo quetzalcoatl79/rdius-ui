@@ -57,20 +57,20 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Monitoring & Dashboards
 
-- [ ] **DASH-01**: Dashboard shows key metrics: total users, active sessions, NAS count, recent auth failures
-- [ ] **DASH-02**: Dashboard shows auth success/failure rate chart over selectable time ranges (1h, 24h, 7d, 30d)
-- [ ] **DASH-03**: Dashboard shows active sessions count with real-time updates (SSE)
-- [ ] **DASH-04**: Dashboard shows traffic per NAS (bandwidth in/out) as bar or line chart
-- [ ] **DASH-05**: Dashboard shows top users by traffic or session time
-- [ ] **DASH-06**: Dashboard metrics use pre-aggregated data (materialized views), not live radacct queries
+- [x] **DASH-01**: Dashboard shows key metrics: total users, active sessions, NAS count, recent auth failures
+- [x] **DASH-02**: Dashboard shows auth success/failure rate chart over selectable time ranges (1h, 24h, 7d, 30d)
+- [x] **DASH-03**: Dashboard shows active sessions count with real-time updates (SSE)
+- [x] **DASH-04**: Dashboard shows traffic per NAS (bandwidth in/out) as bar or line chart
+- [x] **DASH-05**: Dashboard shows top users by traffic or session time
+- [x] **DASH-06**: Dashboard metrics use pre-aggregated data (materialized views), not live radacct queries
 
 ### Logs & Accounting
 
-- [ ] **LOG-01**: Admin can view accounting records (radacct) with filtering by user, NAS, date range
-- [ ] **LOG-02**: Admin can view active sessions (radacct where AcctStopTime IS NULL) with live refresh
-- [ ] **LOG-03**: Admin can view post-auth logs (radpostauth) filtered by status (Accept/Reject) and date
-- [ ] **LOG-04**: Session data shows: username, NAS, IP, duration, data in/out, termination cause
-- [ ] **LOG-05**: All log views support server-side pagination for large datasets
+- [x] **LOG-01**: Admin can view accounting records (radacct) with filtering by user, NAS, date range
+- [x] **LOG-02**: Admin can view active sessions (radacct where AcctStopTime IS NULL) with live refresh
+- [x] **LOG-03**: Admin can view post-auth logs (radpostauth) filtered by status (Accept/Reject) and date
+- [x] **LOG-04**: Session data shows: username, NAS, IP, duration, data in/out, termination cause
+- [x] **LOG-05**: All log views support server-side pagination for large datasets
 
 ### Multi-Server Management
 
@@ -187,17 +187,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-03 | Phase 2 | Complete |
 | UX-04 | Phase 2 | Complete |
 | UX-05 | Phase 2 | Complete |
-| DASH-01 | Phase 3 | Pending |
-| DASH-02 | Phase 3 | Pending |
-| DASH-03 | Phase 3 | Pending |
-| DASH-04 | Phase 3 | Pending |
-| DASH-05 | Phase 3 | Pending |
-| DASH-06 | Phase 3 | Pending |
-| LOG-01 | Phase 3 | Pending |
-| LOG-02 | Phase 3 | Pending |
-| LOG-03 | Phase 3 | Pending |
-| LOG-04 | Phase 3 | Pending |
-| LOG-05 | Phase 3 | Pending |
+| DASH-01 | Phase 3 | Complete |
+| DASH-02 | Phase 3 | Complete |
+| DASH-03 | Phase 3 | Complete |
+| DASH-04 | Phase 3 | Complete |
+| DASH-05 | Phase 3 | Complete |
+| DASH-06 | Phase 3 | Complete |
+| LOG-01 | Phase 3 | Complete |
+| LOG-02 | Phase 3 | Complete |
+| LOG-03 | Phase 3 | Complete |
+| LOG-04 | Phase 3 | Complete |
+| LOG-05 | Phase 3 | Complete |
 | SRV-01 | Phase 4 | Pending |
 | SRV-02 | Phase 4 | Pending |
 | SRV-03 | Phase 4 | Pending |
