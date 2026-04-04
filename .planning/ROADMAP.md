@@ -79,12 +79,12 @@ Plans:
   2. Administrator can restart or reload a FreeRADIUS server from the UI and view server status (running/stopped, uptime, last restart) and health metrics (CPU, memory)
   3. Every admin action (create, update, delete, restart, reload) is logged with who, what, and when in the app schema
   4. Administrator can view and filter the audit log by user, action type, and date range
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — Backend: server registry, Docker service control, audit trail (migration, models, services, endpoints)
+- [ ] 04-02-PLAN.md — Frontend: server selector, server management pages, audit log viewer
 
 ## Progress
 
