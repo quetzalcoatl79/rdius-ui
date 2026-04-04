@@ -27,5 +27,9 @@ class Settings(BaseSettings):
     # CORS
     backend_cors_origins: list[str] = ["http://localhost:3000"]
 
+    # Docker / FreeRADIUS restart
+    docker_socket_url: str = "http://docker-socket-proxy:2375"
+    freeradius_container_label: str = "radius-ui.role=freeradius"
+
 
 settings = Settings()
