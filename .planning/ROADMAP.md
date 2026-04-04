@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Foundation** - Docker infrastructure, dual-schema PostgreSQL, JWT authentication with RBAC
 - [ ] **Phase 2: Core RADIUS Management** - User, group, and NAS lifecycle management with task-oriented UI
 - [x] **Phase 3: Observability** - Dashboards, accounting logs, active sessions, and post-auth logs (completed 2026-04-04)
-- [ ] **Phase 4: Multi-Server & Operations** - Multi-server management, service control, and audit trail
+- [x] **Phase 4: Multi-Server & Operations** - Multi-server management, service control, and audit trail (completed 2026-04-04)
 
 ## Phase Details
 
@@ -84,7 +84,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — Backend: server registry, Docker service control, audit trail (migration, models, services, endpoints)
-- [ ] 04-02-PLAN.md — Frontend: server selector, server management pages, audit log viewer
+- [x] 04-02-PLAN.md — Frontend: server selector, server management pages, audit log viewer
 
 ## Progress
 
@@ -96,4 +96,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Foundation | 3/3 | Complete |  |
 | 2. Core RADIUS Management | 3/3 | Complete |  |
 | 3. Observability | 2/2 | Complete   | 2026-04-04 |
-| 4. Multi-Server & Operations | 0/2 | Not started | - |
+| 4. Multi-Server & Operations | 2/2 | Complete   | 2026-04-04 |

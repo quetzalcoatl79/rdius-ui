@@ -75,7 +75,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Multi-Server Management
 
 - [x] **SRV-01**: Admin can register multiple FreeRADIUS server instances in the application
-- [ ] **SRV-02**: UI shows a server selector to switch context between servers
+- [x] **SRV-02**: UI shows a server selector to switch context between servers
 - [x] **SRV-03**: All RADIUS data views (users, groups, NAS, logs, dashboard) are scoped to the selected server
 - [x] **SRV-04**: Admin can restart or reload a FreeRADIUS server from the UI via Docker API
 - [x] **SRV-05**: Admin can view server status (running/stopped, uptime, last restart)
@@ -199,7 +199,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LOG-04 | Phase 3 | Complete |
 | LOG-05 | Phase 3 | Complete |
 | SRV-01 | Phase 4 | Complete |
-| SRV-02 | Phase 4 | Pending |
+| SRV-02 | Phase 4 | Complete |
 | SRV-03 | Phase 4 | Complete |
 | SRV-04 | Phase 4 | Complete |
 | SRV-05 | Phase 4 | Complete |
