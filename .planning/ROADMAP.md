@@ -29,12 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Super Admin can create application users and assign one of 4 roles (Super Admin, Admin, Operator, Viewer)
   4. Each role has appropriate access restrictions enforced on every API endpoint -- Viewer sees data read-only, Operator cannot manage NAS or server config, Admin cannot manage application users
   5. PostgreSQL contains two isolated schemas (radius and app) and Alembic migrations never touch FreeRADIUS tables
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [x] 01-01: TBD
-- [x] 01-02: TBD
-- [x] 01-03: TBD
+- [x] 01-01-PLAN.md — Docker Compose infrastructure + dual-schema PostgreSQL
+- [x] 01-02-PLAN.md — FastAPI backend with JWT auth, RBAC, and Alembic migrations
+- [x] 01-03-PLAN.md — Next.js 15 frontend with auth context, middleware, and dashboard shell
 
 ### Phase 2: Core RADIUS Management
 **Goal**: Administrators can fully manage RADIUS users, groups, NAS devices, and their relationships through an intuitive task-oriented interface
@@ -46,13 +46,13 @@ Plans:
   3. Administrator can manage NAS devices (create, edit, delete, search) with shared secrets masked in UI, and NAS changes trigger a FreeRADIUS restart with user confirmation
   4. All data management uses task-oriented workflows (wizards, not raw table editing), supports sorting/filtering/pagination, and works on tablet-sized screens
   5. Interface is in French by default with dark mode support
-**Plans**: TBD
+**Plans**: 3 plans
 **UI hint**: yes
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md — FastAPI backend: RADIUS models, schemas with operator validation, service layer, REST endpoints
+- [ ] 02-02-PLAN.md — Frontend: TypeScript types, API client, Users/Groups/NAS management pages
+- [ ] 02-03-PLAN.md — UX polish: dark mode, auth history, sessions, effective policy sub-pages
 
 ### Phase 3: Observability
 **Goal**: Administrators can monitor network activity through dashboards, view accounting records, track active sessions in real-time, and troubleshoot authentication failures
