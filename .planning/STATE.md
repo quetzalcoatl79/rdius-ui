@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-04-03T23:52:28.286Z"
-last_activity: 2026-04-03
+stopped_at: Completed 01-03-PLAN.md - Next.js frontend with auth and dashboard shell
+last_updated: "2026-04-04T00:32:28.232Z"
+last_activity: 2026-04-04
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-03)
 ## Current Position
 
 Phase: 01 (foundation) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
-Last activity: 2026-04-03
+Last activity: 2026-04-04
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01 P02 | 57 | 2 tasks | 28 files |
+| Phase 01-foundation P03 | 38 | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,9 @@ Recent decisions affecting current work:
 - [Phase 01]: PyJWT (not python-jose) for JWT; pwdlib[argon2] (not passlib) for hashing — both libraries are the current FastAPI recommendations
 - [Phase 01]: Alembic uses psycopg2 sync connection for migrations; main app uses asyncpg — asyncpg is incompatible with Alembic's sync runner
 - [Phase 01]: Tests use SQLite+ATTACH DATABASE to simulate app schema — no PostgreSQL required for CI
+- [Phase 01-foundation]: auth.tsx not auth.ts: JSX in .ts causes webpack syntax error in Next.js — always use .tsx for React components
+- [Phase 01-foundation]: Access token in module-level variable (not localStorage) for XSS protection; refresh via httpOnly cookie
+- [Phase 01-foundation]: Middleware checks refresh_token httpOnly cookie (not access token) for route protection
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-03T23:52:28.278Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-04-04T00:32:28.226Z
+Stopped at: Completed 01-03-PLAN.md - Next.js frontend with auth and dashboard shell
 Resume file: None

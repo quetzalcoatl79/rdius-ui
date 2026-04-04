@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01: TBD
 - [x] 01-02: TBD
-- [ ] 01-03: TBD
+- [x] 01-03: TBD
 
 ### Phase 2: Core RADIUS Management
 **Goal**: Administrators can fully manage RADIUS users, groups, NAS devices, and their relationships through an intuitive task-oriented interface
