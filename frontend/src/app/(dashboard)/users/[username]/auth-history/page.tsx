@@ -78,7 +78,7 @@ export default function AuthHistoryPage() {
           <ArrowLeftIcon />
         </Button>
         <div>
-          <h1 className="text-xl font-semibold">Historique d'authentification</h1>
+          <h1 className="text-xl font-semibold">Historique d&apos;authentification</h1>
           <p className="text-sm text-muted-foreground">{username}</p>
         </div>
       </div>

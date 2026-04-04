@@ -111,7 +111,7 @@ export default function GroupDetailPage() {
               <AlertDialogTitle>Retirer le membre</AlertDialogTitle>
               <AlertDialogDescription>
                 Retirer <strong>{row.username}</strong> du groupe{' '}
-                <strong>{groupname}</strong> ? Cette action ne supprime pas l'utilisateur.
+                <strong>{groupname}</strong> ? Cette action ne supprime pas l&apos;utilisateur.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -197,7 +197,7 @@ export default function GroupDetailPage() {
               </DialogHeader>
               <div className="space-y-4 py-2">
                 <div className="space-y-1.5">
-                  <Label htmlFor="add-username">Nom d'utilisateur</Label>
+                  <Label htmlFor="add-username">Nom d&apos;utilisateur</Label>
                   <Input
                     id="add-username"
                     placeholder="ex: jdoe"

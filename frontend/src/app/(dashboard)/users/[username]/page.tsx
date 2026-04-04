@@ -91,7 +91,7 @@ export default function UserDetailPage() {
               <div className="flex items-start gap-3">
                 <ShieldCheckIcon className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-sm">Historique d'authentification</p>
+                  <p className="font-medium text-sm">Historique d&apos;authentification</p>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     Accès acceptés et refusés par FreeRADIUS
                   </p>
@@ -109,7 +109,7 @@ export default function UserDetailPage() {
                 <div>
                   <p className="font-medium text-sm">Historique des sessions</p>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Durée, données transférées et cause d'arrêt
+                    Durée, données transférées et cause d&apos;arrêt
                   </p>
                 </div>
               </div>
