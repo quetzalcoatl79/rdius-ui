@@ -1,33 +1,39 @@
 'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   Users,
-  UsersRound,
+  Users2,
   Server,
   FileText,
   Settings,
-  Wifi,
   LogOut,
 } from 'lucide-react';
 
 const navItems = [
   { href: '/', label: 'Tableau de bord', icon: LayoutDashboard },
   { href: '/users', label: 'Utilisateurs', icon: Users },
-  { href: '/groups', label: 'Groupes', icon: UsersRound },
-  { href: '/nas', label: 'NAS', icon: Wifi },
+  { href: '/groups', label: 'Groupes', icon: Users2 },
+  { href: '/nas', label: 'Équipements NAS', icon: Server },
   { href: '/logs', label: 'Journaux', icon: FileText },
-  { href: '/servers', label: 'Serveurs', icon: Server },
   { href: '/settings', label: 'Paramètres', icon: Settings },
 ];
 
 export function Sidebar() {
   const { user, logout } = useAuth();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return pathname === href || pathname.startsWith(href + '/');
   };
 
   return (
@@ -43,7 +49,12 @@ export function Sidebar() {
           <Link
             key={href}
             href={href}
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className={cn(
+              'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+              isActive(href)
+                ? 'bg-primary/10 text-primary'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+            )}
           >
             <Icon className="h-4 w-4 shrink-0" />
             <span>{label}</span>
