@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation** - Docker infrastructure, dual-schema PostgreSQL, JWT authentication with RBAC
 - [ ] **Phase 2: Core RADIUS Management** - User, group, and NAS lifecycle management with task-oriented UI
-- [ ] **Phase 3: Observability** - Dashboards, accounting logs, active sessions, and post-auth logs
+- [x] **Phase 3: Observability** - Dashboards, accounting logs, active sessions, and post-auth logs (completed 2026-04-04)
 - [ ] **Phase 4: Multi-Server & Operations** - Multi-server management, service control, and audit trail
 
 ## Phase Details
@@ -68,7 +68,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Backend: materialized views, dashboard metrics API, SSE endpoint, accounting/postauth log endpoints
-- [ ] 03-02-PLAN.md — Frontend: dashboard with Recharts charts, SSE real-time sessions, accounting/sessions/postauth log pages
+- [x] 03-02-PLAN.md — Frontend: dashboard with Recharts charts, SSE real-time sessions, accounting/sessions/postauth log pages
 
 ### Phase 4: Multi-Server & Operations
 **Goal**: Administrators can manage multiple FreeRADIUS server instances from a single interface, control services remotely, and review a complete audit trail of all admin actions
@@ -95,5 +95,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete |  |
 | 2. Core RADIUS Management | 3/3 | Complete |  |
-| 3. Observability | 1/2 | In Progress|  |
+| 3. Observability | 2/2 | Complete   | 2026-04-04 |
 | 4. Multi-Server & Operations | 0/2 | Not started | - |
