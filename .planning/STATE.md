@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md - Next.js frontend with auth and dashboard shell
-last_updated: "2026-04-04T00:34:39.835Z"
+stopped_at: Completed 02-01-PLAN.md - RADIUS backend CRUD service layer and endpoints
+last_updated: "2026-04-04T06:55:13.044Z"
 last_activity: 2026-04-04
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
   percent: 0
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-03)
 
 **Core value:** Network administrators can fully configure and monitor one or more FreeRADIUS servers without ever touching the CLI or editing configuration files.
-**Current focus:** Phase 01 — foundation
+**Current focus:** Phase 02 — core-radius-management
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (core-radius-management) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
 Last activity: 2026-04-04
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01 P02 | 57 | 2 tasks | 28 files |
 | Phase 01-foundation P03 | 38 | 3 tasks | 16 files |
+| Phase 02-core-radius-management P01 | 9 | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: auth.tsx not auth.ts: JSX in .ts causes webpack syntax error in Next.js — always use .tsx for React components
 - [Phase 01-foundation]: Access token in module-level variable (not localStorage) for XSS protection; refresh via httpOnly cookie
 - [Phase 01-foundation]: Middleware checks refresh_token httpOnly cookie (not access token) for route protection
+- [Phase 02-01]: Static class methods for service layer — no DI container, simpler for FastAPI Depends
+- [Phase 02-01]: NasResponse.from_nas() factory: explicit masking prevents accidental secret exposure
+- [Phase 02-01]: NAS restart non-fatal: data mutation always commits regardless of Docker socket availability
 
 ### Pending Todos
 
@@ -83,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-04T00:32:28.226Z
-Stopped at: Completed 01-03-PLAN.md - Next.js frontend with auth and dashboard shell
+Last session: 2026-04-04T06:55:13.039Z
+Stopped at: Completed 02-01-PLAN.md - RADIUS backend CRUD service layer and endpoints
 Resume file: None

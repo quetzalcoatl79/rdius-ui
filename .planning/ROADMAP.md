@@ -50,7 +50,7 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 02-01-PLAN.md — FastAPI backend: RADIUS models, schemas with operator validation, service layer, REST endpoints
+- [x] 02-01-PLAN.md — FastAPI backend: RADIUS models, schemas with operator validation, service layer, REST endpoints
 - [ ] 02-02-PLAN.md — Frontend: TypeScript types, API client, Users/Groups/NAS management pages
 - [ ] 02-03-PLAN.md — UX polish: dark mode, auth history, sessions, effective policy sub-pages
 
@@ -95,6 +95,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/3 | In Progress|  |
-| 2. Core RADIUS Management | 0/3 | Not started | - |
+| 2. Core RADIUS Management | 1/3 | In Progress|  |
 | 3. Observability | 0/3 | Not started | - |
 | 4. Multi-Server & Operations | 0/2 | Not started | - |

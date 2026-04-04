@@ -30,30 +30,30 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### RADIUS User Management
 
-- [ ] **USER-01**: Admin can create a RADIUS user with password and authentication attributes (radcheck)
-- [ ] **USER-02**: Admin can set reply attributes for a user (VLAN, IP, bandwidth limits via radreply)
-- [ ] **USER-03**: Admin can edit and delete RADIUS users
-- [ ] **USER-04**: Admin can search users by username with instant filtering
-- [ ] **USER-05**: Admin can view a user's authentication history (from radpostauth)
-- [ ] **USER-06**: Admin can view a user's session history (from radacct)
-- [ ] **USER-07**: Admin can enable/disable a user without deleting them
-- [ ] **USER-08**: Backend validates RADIUS operators per table/attribute context (`:=` vs `==` vs `+=`)
+- [x] **USER-01**: Admin can create a RADIUS user with password and authentication attributes (radcheck)
+- [x] **USER-02**: Admin can set reply attributes for a user (VLAN, IP, bandwidth limits via radreply)
+- [x] **USER-03**: Admin can edit and delete RADIUS users
+- [x] **USER-04**: Admin can search users by username with instant filtering
+- [x] **USER-05**: Admin can view a user's authentication history (from radpostauth)
+- [x] **USER-06**: Admin can view a user's session history (from radacct)
+- [x] **USER-07**: Admin can enable/disable a user without deleting them
+- [x] **USER-08**: Backend validates RADIUS operators per table/attribute context (`:=` vs `==` vs `+=`)
 
 ### Group Management
 
-- [ ] **GRP-01**: Admin can create RADIUS groups with check and reply attributes
-- [ ] **GRP-02**: Admin can assign users to groups with priority ordering (radusergroup)
-- [ ] **GRP-03**: Admin can edit and delete groups
-- [ ] **GRP-04**: Admin can view all members of a group
-- [ ] **GRP-05**: Admin can view effective policy for a user (merged user + group attributes with priority)
+- [x] **GRP-01**: Admin can create RADIUS groups with check and reply attributes
+- [x] **GRP-02**: Admin can assign users to groups with priority ordering (radusergroup)
+- [x] **GRP-03**: Admin can edit and delete groups
+- [x] **GRP-04**: Admin can view all members of a group
+- [x] **GRP-05**: Admin can view effective policy for a user (merged user + group attributes with priority)
 
 ### NAS Management
 
-- [ ] **NAS-01**: Admin can create NAS devices with IP, shared secret, type, and description
-- [ ] **NAS-02**: Admin can edit and delete NAS devices
-- [ ] **NAS-03**: Shared secrets are masked in the UI (show/hide toggle) and never logged
-- [ ] **NAS-04**: After NAS changes, the system triggers a FreeRADIUS restart (not just reload) with user confirmation
-- [ ] **NAS-05**: Admin can search NAS devices by name, IP, or type
+- [x] **NAS-01**: Admin can create NAS devices with IP, shared secret, type, and description
+- [x] **NAS-02**: Admin can edit and delete NAS devices
+- [x] **NAS-03**: Shared secrets are masked in the UI (show/hide toggle) and never logged
+- [x] **NAS-04**: After NAS changes, the system triggers a FreeRADIUS restart (not just reload) with user confirmation
+- [x] **NAS-05**: Admin can search NAS devices by name, IP, or type
 
 ### Monitoring & Dashboards
 
@@ -94,7 +94,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **UX-02**: Interface is responsive (works on tablet for field technicians)
 - [ ] **UX-03**: Dark mode support
 - [ ] **UX-04**: Interface is in French by default (code and commits in English)
-- [ ] **UX-05**: All data tables support sorting, filtering, and server-side pagination
+- [x] **UX-05**: All data tables support sorting, filtering, and server-side pagination
 
 ## v2 Requirements
 
@@ -164,29 +164,29 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-07 | Phase 1 | Complete |
 | AUTH-08 | Phase 1 | Complete |
 | AUTH-09 | Phase 1 | Complete |
-| USER-01 | Phase 2 | Pending |
-| USER-02 | Phase 2 | Pending |
-| USER-03 | Phase 2 | Pending |
-| USER-04 | Phase 2 | Pending |
-| USER-05 | Phase 2 | Pending |
-| USER-06 | Phase 2 | Pending |
-| USER-07 | Phase 2 | Pending |
-| USER-08 | Phase 2 | Pending |
-| GRP-01 | Phase 2 | Pending |
-| GRP-02 | Phase 2 | Pending |
-| GRP-03 | Phase 2 | Pending |
-| GRP-04 | Phase 2 | Pending |
-| GRP-05 | Phase 2 | Pending |
-| NAS-01 | Phase 2 | Pending |
-| NAS-02 | Phase 2 | Pending |
-| NAS-03 | Phase 2 | Pending |
-| NAS-04 | Phase 2 | Pending |
-| NAS-05 | Phase 2 | Pending |
+| USER-01 | Phase 2 | Complete |
+| USER-02 | Phase 2 | Complete |
+| USER-03 | Phase 2 | Complete |
+| USER-04 | Phase 2 | Complete |
+| USER-05 | Phase 2 | Complete |
+| USER-06 | Phase 2 | Complete |
+| USER-07 | Phase 2 | Complete |
+| USER-08 | Phase 2 | Complete |
+| GRP-01 | Phase 2 | Complete |
+| GRP-02 | Phase 2 | Complete |
+| GRP-03 | Phase 2 | Complete |
+| GRP-04 | Phase 2 | Complete |
+| GRP-05 | Phase 2 | Complete |
+| NAS-01 | Phase 2 | Complete |
+| NAS-02 | Phase 2 | Complete |
+| NAS-03 | Phase 2 | Complete |
+| NAS-04 | Phase 2 | Complete |
+| NAS-05 | Phase 2 | Complete |
 | UX-01 | Phase 2 | Pending |
 | UX-02 | Phase 2 | Pending |
 | UX-03 | Phase 2 | Pending |
 | UX-04 | Phase 2 | Pending |
-| UX-05 | Phase 2 | Pending |
+| UX-05 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
