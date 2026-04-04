@@ -14,7 +14,9 @@ import {
   LogOut,
   Activity,
   ShieldCheck,
+  ScrollText,
 } from 'lucide-react';
+import { ServerSelector } from '@/components/layout/server-selector';
 
 const navItems = [
   { href: '/', label: 'Tableau de bord', icon: LayoutDashboard },
@@ -28,6 +30,11 @@ const logItems = [
   { href: '/logs', label: 'Comptabilité', icon: FileText },
   { href: '/logs/sessions', label: 'Sessions actives', icon: Activity },
   { href: '/logs/postauth', label: 'Post-auth', icon: ShieldCheck },
+];
+
+const adminItems = [
+  { href: '/servers', label: 'Serveurs', icon: Server },
+  { href: '/audit', label: "Journal d'audit", icon: ScrollText },
 ];
 
 export function Sidebar() {
@@ -49,6 +56,10 @@ export function Sidebar() {
       <div className="h-14 flex items-center px-4 border-b border-border">
         <span className="font-bold text-lg tracking-tight">Radius UI</span>
       </div>
+
+      {/* Server selector */}
+      <ServerSelector />
+      <div className="border-b border-border" />
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
@@ -74,6 +85,28 @@ export function Sidebar() {
             Journaux
           </p>
           {logItems.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                isActive(href)
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              )}
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span>{label}</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Administration section */}
+        <div className="pt-2">
+          <p className="px-3 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Administration
+          </p>
+          {adminItems.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
