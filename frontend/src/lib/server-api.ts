@@ -2,10 +2,18 @@ import { apiFetch } from '@/lib/api';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
+export type ServerType = 'docker' | 'remote';
+
 export interface ServerResponse {
   id: string;
   name: string;
-  docker_container_id: string;
+  server_type: ServerType;
+  docker_container_id: string | null;
+  remote_host: string | null;
+  remote_port: number;
+  remote_user: string | null;
+  remote_restart_cmd: string | null;
+  remote_status_cmd: string | null;
   description: string | null;
   is_active: boolean;
   created_at: string;
@@ -14,21 +22,32 @@ export interface ServerResponse {
 
 export interface ServerCreate {
   name: string;
-  docker_container_id: string;
+  server_type: ServerType;
+  docker_container_id?: string | null;
+  remote_host?: string | null;
+  remote_port?: number;
+  remote_user?: string | null;
+  remote_restart_cmd?: string | null;
+  remote_status_cmd?: string | null;
   description?: string | null;
-  is_active?: boolean;
 }
 
 export interface ServerUpdate {
   name?: string;
-  docker_container_id?: string;
+  server_type?: ServerType;
+  docker_container_id?: string | null;
+  remote_host?: string | null;
+  remote_port?: number;
+  remote_user?: string | null;
+  remote_restart_cmd?: string | null;
+  remote_status_cmd?: string | null;
   description?: string | null;
   is_active?: boolean;
 }
 
 export interface ServerStatus {
   server_id: string;
-  container_status: 'running' | 'stopped' | 'restarting' | 'not_found';
+  container_status: 'running' | 'stopped' | 'restarting' | 'not_found' | 'not_configured' | 'unknown';
   uptime_seconds: number | null;
   started_at: string | null;
   last_restart: string | null;

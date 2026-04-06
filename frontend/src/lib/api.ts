@@ -1,52 +1,39 @@
-const API_BASE = '/api/v1';
+const API_BASE = 'http://localhost:8000/api/v1';
 
-let accessToken: string | null = null;
+export function getAccessToken(): string | null {
+  if (typeof window !== 'undefined') {
+    return sessionStorage.getItem('access_token');
+  }
+  return null;
+}
 
 export function setAccessToken(token: string | null) {
-  accessToken = token;
+  if (typeof window !== 'undefined') {
+    if (token) {
+      sessionStorage.setItem('access_token', token);
+    } else {
+      sessionStorage.removeItem('access_token');
+    }
+  }
 }
 
-export function getAccessToken() {
-  return accessToken;
-}
-
-export async function apiFetch(path: string, options: RequestInit = {}) {
+export async function apiFetch(path: string, options: RequestInit = {}): Promise<Response> {
+  const token = getAccessToken();
   const headers = new Headers(options.headers);
-  if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
-  headers.set('Content-Type', 'application/json');
 
-  let res = await fetch(`${API_BASE}${path}`, {
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  if (!headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
+
+  const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers,
     credentials: 'include',
   });
 
-  // Auto-refresh on 401
-  if (res.status === 401 && accessToken) {
-    const refreshed = await refreshAccessToken();
-    if (refreshed) {
-      headers.set('Authorization', `Bearer ${accessToken}`);
-      res = await fetch(`${API_BASE}${path}`, {
-        ...options,
-        headers,
-        credentials: 'include',
-      });
-    }
-  }
-
   return res;
-}
-
-async function refreshAccessToken(): Promise<boolean> {
-  const res = await fetch(`${API_BASE}/auth/refresh`, {
-    method: 'POST',
-    credentials: 'include',
-  });
-  if (res.ok) {
-    const data = await res.json();
-    accessToken = data.access_token;
-    return true;
-  }
-  accessToken = null;
-  return false;
 }

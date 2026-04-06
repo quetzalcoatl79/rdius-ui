@@ -35,7 +35,13 @@ class Server(AppBase):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
-    docker_container_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    server_type: Mapped[str] = mapped_column(String(20), nullable=False, default="docker")
+    docker_container_id: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    remote_host: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    remote_port: Mapped[int] = mapped_column(sa.Integer, nullable=False, default=22)
+    remote_user: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    remote_restart_cmd: Mapped[Optional[str]] = mapped_column(String(500), nullable=True, default="sudo systemctl restart freeradius")
+    remote_status_cmd: Mapped[Optional[str]] = mapped_column(String(500), nullable=True, default="systemctl is-active freeradius")
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     created_at: Mapped[datetime] = mapped_column(

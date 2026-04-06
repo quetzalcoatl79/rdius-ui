@@ -57,6 +57,14 @@ function StatusBadge({ status }: { status: ServerStatus['container_status'] }) {
       label: 'Introuvable',
       className: 'bg-muted text-muted-foreground border-0',
     },
+    not_configured: {
+      label: 'Non configuré',
+      className: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400 border-0',
+    },
+    unknown: {
+      label: 'Inconnu',
+      className: 'bg-muted text-muted-foreground border-0',
+    },
   };
   const { label, className } = config[status];
   return <Badge className={className}>{label}</Badge>;
@@ -100,14 +108,14 @@ interface EditFormProps {
 
 function EditForm({ server, onSave, onCancel, loading }: EditFormProps) {
   const [name, setName] = useState(server.name);
-  const [container, setContainer] = useState(server.docker_container_id);
+  const [container, setContainer] = useState(server.docker_container_id ?? '');
   const [description, setDescription] = useState(server.description ?? '');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!name.trim() || !container.trim()) {
+    if (!name.trim() || (server.server_type !== 'remote' && !container.trim())) {
       setError('Le nom et l\'ID du conteneur sont obligatoires');
       return;
     }

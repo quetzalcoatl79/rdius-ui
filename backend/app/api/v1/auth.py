@@ -33,7 +33,7 @@ async def login(
         value=refresh_token,
         httponly=True,
         samesite="strict",
-        path="/api/v1/auth/refresh",
+        path="/",
         max_age=settings.refresh_token_expire_days * 24 * 3600,
         secure=False,  # Set to True in production with HTTPS
     )
@@ -58,7 +58,7 @@ async def refresh_token(
 
 @router.post("/logout")
 async def logout(response: Response):
-    response.delete_cookie(key=REFRESH_COOKIE_NAME, path="/api/v1/auth/refresh")
+    response.delete_cookie(key=REFRESH_COOKIE_NAME, path="/")
     return {"message": "logged out"}
 
 

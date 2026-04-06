@@ -4,18 +4,23 @@
 --           (see infra/postgres/Dockerfile)
 -- ──────────────────────────────────────────────────────────────────────────────
 
+-- Create the partman schema first (required before installing the extension into it)
+CREATE SCHEMA IF NOT EXISTS partman;
+
 -- Install pg_partman extension into the partman schema
 CREATE EXTENSION IF NOT EXISTS pg_partman SCHEMA partman;
 
 -- Create monthly partitions for radius.radacct
 -- p_parent_table: the partitioned parent table
 -- p_control:      partition key column (AcctStartTime)
--- p_interval:     'monthly' — one partition per month
+-- p_interval:     '1 month' — one partition per month (PostgreSQL interval syntax)
+--                 NOTE: 'monthly' was a pg_partman shorthand removed in newer versions.
+--                 Use standard PostgreSQL interval values instead.
 -- p_start_partition: start from the current month
 SELECT partman.create_parent(
     p_parent_table    => 'radius.radacct',
-    p_control         => 'AcctStartTime',
-    p_interval        => 'monthly',
+    p_control         => 'acctstarttime',
+    p_interval        => '1 month',
     p_start_partition => to_char(NOW(), 'YYYY-MM-01')
 );
 

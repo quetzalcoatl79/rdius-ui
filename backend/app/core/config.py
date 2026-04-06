@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     refresh_token_expire_days: int = 7
 
     # CORS
-    backend_cors_origins: list[str] = ["http://localhost:3000"]
+    backend_cors_origins: list[str] = ["http://localhost:3000", "http://localhost:3001"]
 
     # Docker / FreeRADIUS restart
     docker_socket_url: str = "http://docker-socket-proxy:2375"
@@ -33,6 +33,11 @@ class Settings(BaseSettings):
 
     # Dashboard materialized view refresh interval (seconds)
     materialized_view_refresh_seconds: int = 60
+
+    # Seed admin (created on first startup if no users exist)
+    seed_admin_email: str = "admin@radiusui.dev"
+    seed_admin_password: str = "admin"
+    seed_admin_name: str = "Super Admin"
 
 
 settings = Settings()

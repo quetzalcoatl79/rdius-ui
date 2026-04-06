@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
@@ -14,16 +15,9 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import {
-  Users,
-  Activity,
-  Server,
-  ShieldAlert,
-} from 'lucide-react';
+import { Users, Activity, Server, ShieldAlert } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useSSE } from '@/hooks/use-sse';
 import {
   getDashboardMetrics,
   getAuthRates,
@@ -31,29 +25,35 @@ import {
   getTopUsers,
 } from '@/lib/dashboard-api';
 import { formatDuration, formatBytes } from '@/lib/format';
+import { useI18n } from '@/lib/i18n';
 import type { TimeRange } from '@/types/dashboard';
 
-// ─── French date formatter for chart axis ─────────────────────────────────────
+// ---- Date formatters ----
 
-const frFmt = new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit' });
-const frFmtDate = new Intl.DateTimeFormat('fr-FR', { month: 'short', day: 'numeric' });
-
-function formatBucket(bucket: string, range: TimeRange): string {
-  const d = new Date(bucket);
-  if (range === '1h' || range === '24h') return frFmt.format(d);
-  return frFmtDate.format(d);
+function makeFmt(locale: string) {
+  return {
+    time: new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }),
+    date: new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric' }),
+  };
 }
 
-// ─── Time range options ───────────────────────────────────────────────────────
+function formatBucket(bucket: string, range: TimeRange, locale: string): string {
+  const d = new Date(bucket);
+  const fmt = makeFmt(locale);
+  if (range === '1h' || range === '24h') return fmt.time.format(d);
+  return fmt.date.format(d);
+}
+
+// ---- Time range options ----
 
 const TIME_RANGES: { value: TimeRange; label: string }[] = [
   { value: '1h', label: '1h' },
   { value: '24h', label: '24h' },
-  { value: '7d', label: '7j' },
-  { value: '30d', label: '30j' },
+  { value: '7d', label: '7d' },
+  { value: '30d', label: '30d' },
 ];
 
-// ─── Skeleton card ────────────────────────────────────────────────────────────
+// ---- Skeleton card ----
 
 function SkeletonCard() {
   return (
@@ -70,10 +70,43 @@ function SkeletonCard() {
   );
 }
 
-// ─── Dashboard page ───────────────────────────────────────────────────────────
+// ---- Metric card ----
+
+function MetricCard({
+  title,
+  value,
+  description,
+  icon: Icon,
+  accent,
+}: {
+  title: string;
+  value: number;
+  description: string;
+  icon: typeof Users;
+  accent: string;
+}) {
+  return (
+    <Card className="relative overflow-hidden">
+      <div className={`absolute inset-0 opacity-5 ${accent}`} />
+      <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <div className={`p-2 rounded-lg ${accent} bg-opacity-10`}>
+          <Icon className="h-4 w-4 text-primary" />
+        </div>
+      </CardHeader>
+      <CardContent className="relative">
+        <div className="text-3xl font-bold tracking-tight">{value}</div>
+        <p className="text-xs text-muted-foreground mt-1">{description}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ---- Dashboard page ----
 
 export default function DashboardPage() {
   const { resolvedTheme } = useTheme();
+  const { t, locale } = useI18n();
   const isDark = resolvedTheme === 'dark';
 
   const [range, setRange] = useState<TimeRange>('24h');
@@ -104,28 +137,20 @@ export default function DashboardPage() {
     refetchInterval: 60_000,
   });
 
-  // SSE for real-time active sessions count
-  const { data: sseData, connected: sseConnected } = useSSE<{ active_sessions: number }>({
-    url: '/dashboard/sessions/stream',
-    enabled: true,
-  });
-
-  const activeSessionsCount =
-    sseData?.active_sessions ?? metrics?.active_sessions ?? 0;
-
   // Chart colors
   const axisColor = isDark ? '#9ca3af' : '#6b7280';
   const gridColor = isDark ? '#374151' : '#e5e7eb';
   const tooltipStyle = {
-    backgroundColor: isDark ? '#1f2937' : '#ffffff',
-    border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
-    color: isDark ? '#f9fafb' : '#111827',
+    backgroundColor: isDark ? '#1e1b4b' : '#ffffff',
+    border: `1px solid ${isDark ? '#312e81' : '#e0e7ff'}`,
+    borderRadius: '8px',
+    color: isDark ? '#e0e7ff' : '#312e81',
   };
 
   // Auth rates chart data
   const authChartData = (authRates ?? []).map((b) => ({
     ...b,
-    label: formatBucket(b.bucket, range),
+    label: formatBucket(b.bucket, range, locale),
   }));
 
   // Traffic per NAS chart data
@@ -140,13 +165,13 @@ export default function DashboardPage() {
     <div className="space-y-6">
       {/* Page title */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Tableau de bord</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t('dashboard.title')}</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Vue d&apos;ensemble de votre infrastructure RADIUS
+          {t('dashboard.subtitle')}
         </p>
       </div>
 
-      {/* ── Metric cards ──────────────────────────────────────────────────── */}
+      {/* ---- Metric cards ---- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {metricsLoading ? (
           <>
@@ -157,73 +182,43 @@ export default function DashboardPage() {
           </>
         ) : (
           <>
-            {/* Utilisateurs */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Utilisateurs</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.total_users ?? 0}</div>
-                <p className="text-xs text-muted-foreground mt-1">Comptes RADIUS enregistrés</p>
-              </CardContent>
-            </Card>
-
-            {/* Sessions actives — SSE powered */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Sessions actives</CardTitle>
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className={cn(
-                      'h-2 w-2 rounded-full',
-                      sseConnected ? 'bg-green-500' : 'bg-muted-foreground'
-                    )}
-                    title={sseConnected ? 'Temps réel connecté' : 'Hors ligne'}
-                  />
-                  <Activity className="h-4 w-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{activeSessionsCount}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {sseConnected ? 'Mis à jour en temps réel' : 'Connexions en cours'}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Equipements NAS */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Équipements NAS</CardTitle>
-                <Server className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.nas_count ?? 0}</div>
-                <p className="text-xs text-muted-foreground mt-1">Points d&apos;accès configurés</p>
-              </CardContent>
-            </Card>
-
-            {/* Echecs d'auth récents */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Échecs récents</CardTitle>
-                <ShieldAlert className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.recent_auth_failures ?? 0}</div>
-                <p className="text-xs text-muted-foreground mt-1">Échecs d&apos;authentification (1h)</p>
-              </CardContent>
-            </Card>
+            <MetricCard
+              title={t('dashboard.users')}
+              value={metrics?.total_users ?? 0}
+              description={t('dashboard.usersDesc')}
+              icon={Users}
+              accent="bg-blue-500"
+            />
+            <MetricCard
+              title={t('dashboard.activeSessions')}
+              value={metrics?.active_sessions ?? 0}
+              description={t('dashboard.activeSessionsDesc')}
+              icon={Activity}
+              accent="bg-emerald-500"
+            />
+            <MetricCard
+              title={t('dashboard.nasEquipment')}
+              value={metrics?.nas_count ?? 0}
+              description={t('dashboard.nasEquipmentDesc')}
+              icon={Server}
+              accent="bg-violet-500"
+            />
+            <MetricCard
+              title={t('dashboard.recentFailures')}
+              value={metrics?.recent_auth_failures ?? 0}
+              description={t('dashboard.recentFailuresDesc')}
+              icon={ShieldAlert}
+              accent="bg-red-500"
+            />
           </>
         )}
       </div>
 
-      {/* ── Auth rates chart ───────────────────────────────────────────────── */}
+      {/* ---- Auth rates chart ---- */}
       <Card>
         <CardHeader>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <CardTitle>Taux d&apos;authentification</CardTitle>
+            <CardTitle>{t('dashboard.authRates')}</CardTitle>
             <div className="flex items-center gap-1">
               {TIME_RANGES.map(({ value, label }) => (
                 <Button
@@ -246,11 +241,14 @@ export default function DashboardPage() {
             </div>
           ) : authChartData.length === 0 ? (
             <div className="h-64 flex items-center justify-center text-muted-foreground text-sm">
-              Aucune donnée disponible
+              {t('dashboard.noData')}
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={260}>
-              <AreaChart data={authChartData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <AreaChart
+                data={authChartData}
+                margin={{ top: 4, right: 8, left: 0, bottom: 0 }}
+              >
                 <defs>
                   <linearGradient id="successGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#22c55e" stopOpacity={0.4} />
@@ -277,7 +275,7 @@ export default function DashboardPage() {
                 <Tooltip contentStyle={tooltipStyle} />
                 <Legend
                   formatter={(value: string) =>
-                    value === 'success' ? 'Succès' : 'Échecs'
+                    value === 'success' ? t('dashboard.success') : t('dashboard.failures')
                   }
                 />
                 <Area
@@ -304,12 +302,12 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      {/* ── Traffic per NAS + Top users ────────────────────────────────────── */}
+      {/* ---- Traffic per NAS + Top users ---- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Traffic per NAS BarChart */}
+        {/* Traffic per NAS */}
         <Card>
           <CardHeader>
-            <CardTitle>Trafic par NAS</CardTitle>
+            <CardTitle>{t('dashboard.trafficPerNas')}</CardTitle>
           </CardHeader>
           <CardContent>
             {trafficLoading ? (
@@ -318,7 +316,7 @@ export default function DashboardPage() {
               </div>
             ) : nasChartData.length === 0 ? (
               <div className="h-64 flex items-center justify-center text-muted-foreground text-sm">
-                Aucune donnée disponible
+                {t('dashboard.noData')}
               </div>
             ) : (
               <ResponsiveContainer width="100%" height={260}>
@@ -327,7 +325,11 @@ export default function DashboardPage() {
                   layout="vertical"
                   margin={{ top: 4, right: 8, left: 0, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} horizontal={false} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke={gridColor}
+                    horizontal={false}
+                  />
                   <XAxis
                     type="number"
                     tickFormatter={(v: number) => formatBytes(v)}
@@ -345,15 +347,27 @@ export default function DashboardPage() {
                   />
                   <Tooltip
                     contentStyle={tooltipStyle}
-                    formatter={(value) => [formatBytes(typeof value === 'number' ? value : 0)]}
+                    formatter={(value) => [
+                      formatBytes(typeof value === 'number' ? value : 0),
+                    ]}
                   />
                   <Legend
                     formatter={(value: string) =>
-                      value === 'bytes_in' ? 'Entrant' : 'Sortant'
+                      value === 'bytes_in' ? t('dashboard.incoming') : t('dashboard.outgoing')
                     }
                   />
-                  <Bar dataKey="bytes_in" name="bytes_in" fill="#3b82f6" radius={[0, 2, 2, 0]} />
-                  <Bar dataKey="bytes_out" name="bytes_out" fill="#f97316" radius={[0, 2, 2, 0]} />
+                  <Bar
+                    dataKey="bytes_in"
+                    name="bytes_in"
+                    fill="#6366f1"
+                    radius={[0, 4, 4, 0]}
+                  />
+                  <Bar
+                    dataKey="bytes_out"
+                    name="bytes_out"
+                    fill="#f59e0b"
+                    radius={[0, 4, 4, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -364,7 +378,7 @@ export default function DashboardPage() {
         <Card>
           <CardHeader>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <CardTitle>Top utilisateurs</CardTitle>
+              <CardTitle>{t('dashboard.topUsers')}</CardTitle>
               <div className="flex items-center gap-1">
                 <Button
                   variant={topUsersBy === 'traffic' ? 'default' : 'outline'}
@@ -372,7 +386,7 @@ export default function DashboardPage() {
                   className="h-7 px-2.5 text-xs"
                   onClick={() => setTopUsersBy('traffic')}
                 >
-                  Par trafic
+                  {t('dashboard.byTraffic')}
                 </Button>
                 <Button
                   variant={topUsersBy === 'time' ? 'default' : 'outline'}
@@ -380,7 +394,7 @@ export default function DashboardPage() {
                   className="h-7 px-2.5 text-xs"
                   onClick={() => setTopUsersBy('time')}
                 >
-                  Par temps
+                  {t('dashboard.byTime')}
                 </Button>
               </div>
             </div>
@@ -394,22 +408,24 @@ export default function DashboardPage() {
               </div>
             ) : !topUsers || topUsers.length === 0 ? (
               <div className="h-40 flex items-center justify-center text-muted-foreground text-sm">
-                Aucune donnée disponible
+                {t('dashboard.noData')}
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-2 pr-4 font-medium text-muted-foreground">#</th>
                       <th className="text-left py-2 pr-4 font-medium text-muted-foreground">
-                        Utilisateur
+                        #
+                      </th>
+                      <th className="text-left py-2 pr-4 font-medium text-muted-foreground">
+                        {t('dashboard.user')}
                       </th>
                       <th className="text-right py-2 pr-4 font-medium text-muted-foreground">
-                        Trafic total
+                        {t('dashboard.totalTraffic')}
                       </th>
                       <th className="text-right py-2 font-medium text-muted-foreground">
-                        Temps de session
+                        {t('dashboard.sessionTime')}
                       </th>
                     </tr>
                   </thead>
@@ -419,7 +435,9 @@ export default function DashboardPage() {
                         key={u.username}
                         className="border-b border-border/50 hover:bg-muted/50 transition-colors"
                       >
-                        <td className="py-2 pr-4 text-muted-foreground">{idx + 1}</td>
+                        <td className="py-2 pr-4 text-muted-foreground">
+                          {idx + 1}
+                        </td>
                         <td className="py-2 pr-4 font-medium truncate max-w-[140px]">
                           {u.username}
                         </td>
