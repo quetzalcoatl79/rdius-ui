@@ -2,14 +2,17 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* NXO Design System tokens (validated by marketing - Dec 2025) */
+/* Montserrat font loaded via next/font/google in layout.tsx */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,82 +42,134 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 9999px;
 }
 
+/* ════════════════════════════════════════════════════════════════════
+   LIGHT THEME — NXO Corporate (Fayat group)
+   Source: nxo-design-system/tokens/tokens.css (validated Dec 2025)
+   ════════════════════════════════════════════════════════════════════ */
 :root {
-  --background: oklch(0.985 0.002 260);
-  --foreground: oklch(0.13 0.028 261);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.028 261);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.028 261);
-  --primary: oklch(0.488 0.243 264);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0.012 260);
-  --secondary-foreground: oklch(0.25 0.05 261);
-  --muted: oklch(0.96 0.008 260);
-  --muted-foreground: oklch(0.50 0.02 261);
-  --accent: oklch(0.94 0.025 260);
-  --accent-foreground: oklch(0.25 0.05 261);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0.012 260);
-  --input: oklch(0.91 0.012 260);
-  --ring: oklch(0.488 0.243 264);
-  --chart-1: oklch(0.488 0.243 264);
-  --chart-2: oklch(0.6 0.2 150);
-  --chart-3: oklch(0.65 0.2 50);
-  --chart-4: oklch(0.55 0.2 310);
-  --chart-5: oklch(0.7 0.18 80);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.16 0.035 262);
-  --sidebar-foreground: oklch(0.92 0.01 260);
-  --sidebar-primary: oklch(0.65 0.24 264);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.22 0.04 262);
-  --sidebar-accent-foreground: oklch(0.92 0.01 260);
-  --sidebar-border: oklch(0.25 0.04 262);
-  --sidebar-ring: oklch(0.488 0.243 264);
+  /* Fayat brand */
+  --fayat-blue: #0055a0;
+  --fayat-yellow: #ffd800;
+  --fayat-gray: #66757e;
+
+  /* NXO corporate */
+  --nxo-blue-dark: #002f60;
+  --nxo-blue-light: #5692ce;
+  --nxo-blue-very-light: #b4dfe7;
+  --nxo-gray: #cfd1d2;
+  --nxo-green: #00a486;
+  --nxo-teal: #008a9b;
+  --nxo-yellow: #ffd300;
+  --nxo-orange: #e95e3f;
+  --nxo-red: #e53138;
+
+  /* Backgrounds & text */
+  --background: #f5f5f5;             /* nxo-bg-page */
+  --foreground: #212b36;             /* nxo-text-body */
+  --card: #ffffff;
+  --card-foreground: #212b36;
+  --popover: #ffffff;
+  --popover-foreground: #212b36;
+
+  /* Primary = NXO Blue Dark (used on buttons by NXO) */
+  --primary: #002f60;
+  --primary-foreground: #ffffff;
+
+  /* Secondary = NXO Blue Very Light */
+  --secondary: #b4dfe7;
+  --secondary-foreground: #002f60;
+
+  /* Muted */
+  --muted: #f5f5f5;
+  --muted-foreground: #6c757d;       /* nxo-text-muted */
+
+  /* Accent = Fayat Blue */
+  --accent: #b4dfe7;
+  --accent-foreground: #002f60;
+
+  /* Destructive = NXO Red */
+  --destructive: #e53138;
+  --destructive-foreground: #ffffff;
+
+  /* Borders & inputs */
+  --border: #e0e0e0;
+  --input: #e0e0e0;
+  --ring: #0055a0;                   /* Fayat blue for focus */
+
+  /* Charts (NXO accent palette) */
+  --chart-1: #0055a0;                /* Fayat blue */
+  --chart-2: #00a486;                /* NXO green */
+  --chart-3: #5692ce;                /* NXO blue light */
+  --chart-4: #e95e3f;                /* NXO orange */
+  --chart-5: #008a9b;                /* NXO teal */
+
+  --radius: 8px;                     /* nxo-radius-md (standard) */
+
+  /* Sidebar = NXO Blue Dark (header style) */
+  --sidebar: #002f60;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #5692ce;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #00407f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #00407f;
+  --sidebar-ring: #5692ce;
 }
 
+/* ════════════════════════════════════════════════════════════════════
+   DARK THEME — NXO inverted (cohérent avec les couleurs corporate)
+   ════════════════════════════════════════════════════════════════════ */
 .dark {
-  --background: oklch(0.12 0.02 262);
-  --foreground: oklch(0.93 0.01 260);
-  --card: oklch(0.17 0.025 262);
-  --card-foreground: oklch(0.93 0.01 260);
-  --popover: oklch(0.17 0.025 262);
-  --popover-foreground: oklch(0.93 0.01 260);
-  --primary: oklch(0.65 0.24 264);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.22 0.035 262);
-  --secondary-foreground: oklch(0.93 0.01 260);
-  --muted: oklch(0.22 0.025 262);
-  --muted-foreground: oklch(0.65 0.02 260);
-  --accent: oklch(0.25 0.04 262);
-  --accent-foreground: oklch(0.93 0.01 260);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.28 0.03 262);
-  --input: oklch(0.25 0.03 262);
-  --ring: oklch(0.65 0.24 264);
-  --chart-1: oklch(0.65 0.24 264);
-  --chart-2: oklch(0.7 0.18 150);
-  --chart-3: oklch(0.72 0.18 50);
-  --chart-4: oklch(0.65 0.18 310);
-  --chart-5: oklch(0.75 0.15 80);
-  --sidebar: oklch(0.13 0.025 262);
-  --sidebar-foreground: oklch(0.85 0.01 260);
-  --sidebar-primary: oklch(0.65 0.24 264);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.20 0.035 262);
-  --sidebar-accent-foreground: oklch(0.90 0.01 260);
-  --sidebar-border: oklch(0.25 0.035 262);
-  --sidebar-ring: oklch(0.65 0.24 264);
+  --background: #0a1828;             /* Dark blue-tinted background */
+  --foreground: #e5e9ed;
+  --card: #122339;
+  --card-foreground: #e5e9ed;
+  --popover: #122339;
+  --popover-foreground: #e5e9ed;
+
+  /* Primary = NXO Blue Light (inversion) */
+  --primary: #5692ce;
+  --primary-foreground: #ffffff;
+
+  --secondary: #1a2f4a;
+  --secondary-foreground: #b4dfe7;
+
+  --muted: #1a2f4a;
+  --muted-foreground: #9ba8b5;
+
+  --accent: #1a2f4a;
+  --accent-foreground: #b4dfe7;
+
+  --destructive: #e53138;
+  --destructive-foreground: #ffffff;
+
+  --border: #1f3654;
+  --input: #1f3654;
+  --ring: #5692ce;
+
+  --chart-1: #5692ce;
+  --chart-2: #00a486;
+  --chart-3: #b4dfe7;
+  --chart-4: #e95e3f;
+  --chart-5: #008a9b;
+
+  --sidebar: #050f1c;
+  --sidebar-foreground: #e5e9ed;
+  --sidebar-primary: #5692ce;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #122339;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1f3654;
+  --sidebar-ring: #5692ce;
 }
 
 @layer base {
@@ -123,8 +178,16 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
   }
   html {
-    @apply font-sans;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
   }
 }

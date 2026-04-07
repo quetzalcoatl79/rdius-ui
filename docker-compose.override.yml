@@ -25,8 +25,25 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       NEXT_PUBLIC_API_URL: http://backend:8000
+      # Reduce file watching overhead on Windows mounts
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      # Turbopack memory limit
+      NODE_OPTIONS: "--max-old-space-size=4096"
     volumes:
+      # Source code mounted for hot-reload
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+      - ./frontend/next.config.ts:/app/next.config.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/warmup.sh:/app/warmup.sh
+      # Named volumes for build cache (kept inside Linux FS — much faster)
+      - frontend_next_cache:/app/.next
+      - frontend_node_modules:/app/node_modules
     ports:
       - "3001:3000"
+
+volumes:
+  frontend_next_cache:
+  frontend_node_modules:

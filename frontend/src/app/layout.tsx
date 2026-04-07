@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Providers } from "./providers";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,9 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <html lang="fr" className={`${montserrat.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-sans">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
