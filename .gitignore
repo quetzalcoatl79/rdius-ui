@@ -47,6 +47,10 @@ Thumbs.db
 # Claude Code
 .claude/
 .claudio/
+CLAUDE.md
+
+# GSD planning artifacts (local only)
+.planning/
 
 # Testing
 .coverage
