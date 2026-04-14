@@ -50,16 +50,20 @@ services:
     restart: unless-stopped
 
   # ──────────────────────────────────────────────────────────────────
-  # FreeRADIUS 3.2.3 — instance 1
-  # Ports: 1812/udp (auth), 1813/udp (accounting)
+  # CLUSTER 1 (Production) — 300 sessions simultanées
+  # 2 appliances FreeRADIUS 3.2.8 en HA
   # ──────────────────────────────────────────────────────────────────
-  freeradius-1:
-    image: freeradius/freeradius-server:3.2.3
+
+  # Cluster 1 — Node A
+  # Ports: 1812/udp (auth), 1813/udp (accounting)
+  freeradius-prod1-a:
+    build:
+      context: ./infra/freeradius
+      dockerfile: Dockerfile
+    image: radius-ui-freeradius:3.2.8
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./infra/freeradius:/etc/freeradius/3.0:ro
     ports:
       - "1812:1812/udp"
       - "1813:1813/udp"
@@ -71,22 +75,24 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
     labels:
       radius-ui.managed: "true"
-      radius-ui.instance: "freeradius-1"
+      radius-ui.instance: "freeradius-prod1-a"
+      radius-ui.cluster: "cluster-1"
+      radius-ui.role: "production"
+      radius-ui.capacity: "300"
     networks:
       - radius-net
     restart: unless-stopped
 
-  # ──────────────────────────────────────────────────────────────────
-  # FreeRADIUS 3.2.3 — instance 2
+  # Cluster 1 — Node B
   # Ports: 1814/udp (auth), 1815/udp (accounting)
-  # ──────────────────────────────────────────────────────────────────
-  freeradius-2:
-    image: freeradius/freeradius-server:3.2.3
+  freeradius-prod1-b:
+    build:
+      context: ./infra/freeradius
+      dockerfile: Dockerfile
+    image: radius-ui-freeradius:3.2.8
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./infra/freeradius:/etc/freeradius/3.0:ro
     ports:
       - "1814:1812/udp"
       - "1815:1813/udp"
@@ -98,22 +104,29 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
     labels:
       radius-ui.managed: "true"
-      radius-ui.instance: "freeradius-2"
+      radius-ui.instance: "freeradius-prod1-b"
+      radius-ui.cluster: "cluster-1"
+      radius-ui.role: "production"
+      radius-ui.capacity: "300"
     networks:
       - radius-net
     restart: unless-stopped
 
   # ──────────────────────────────────────────────────────────────────
-  # FreeRADIUS 3.2.3 — instance 3
-  # Ports: 1816/udp (auth), 1817/udp (accounting)
+  # CLUSTER 2 (Production) — 500 sessions simultanées
+  # 2 appliances FreeRADIUS 3.2.8 en HA
   # ──────────────────────────────────────────────────────────────────
-  freeradius-3:
-    image: freeradius/freeradius-server:3.2.3
+
+  # Cluster 2 — Node A
+  # Ports: 1816/udp (auth), 1817/udp (accounting)
+  freeradius-prod2-a:
+    build:
+      context: ./infra/freeradius
+      dockerfile: Dockerfile
+    image: radius-ui-freeradius:3.2.8
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./infra/freeradius:/etc/freeradius/3.0:ro
     ports:
       - "1816:1812/udp"
       - "1817:1813/udp"
@@ -125,7 +138,71 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
     labels:
       radius-ui.managed: "true"
-      radius-ui.instance: "freeradius-3"
+      radius-ui.instance: "freeradius-prod2-a"
+      radius-ui.cluster: "cluster-2"
+      radius-ui.role: "production"
+      radius-ui.capacity: "500"
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # Cluster 2 — Node B
+  # Ports: 1818/udp (auth), 1819/udp (accounting)
+  freeradius-prod2-b:
+    build:
+      context: ./infra/freeradius
+      dockerfile: Dockerfile
+    image: radius-ui-freeradius:3.2.8
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "1818:1812/udp"
+      - "1819:1813/udp"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    labels:
+      radius-ui.managed: "true"
+      radius-ui.instance: "freeradius-prod2-b"
+      radius-ui.cluster: "cluster-2"
+      radius-ui.role: "production"
+      radius-ui.capacity: "500"
+    networks:
+      - radius-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # TEST instance — 100 sessions simultanées
+  # 1 appliance FreeRADIUS 3.2.8 isolée pour validation
+  # Ports: 1820/udp (auth), 1821/udp (accounting)
+  # ──────────────────────────────────────────────────────────────────
+  freeradius-test:
+    build:
+      context: ./infra/freeradius
+      dockerfile: Dockerfile
+    image: radius-ui-freeradius:3.2.8
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "1820:1812/udp"
+      - "1821:1813/udp"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-radiusadmin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-radiusdb}
+    labels:
+      radius-ui.managed: "true"
+      radius-ui.instance: "freeradius-test"
+      radius-ui.cluster: "test"
+      radius-ui.role: "test"
+      radius-ui.capacity: "100"
     networks:
       - radius-net
     restart: unless-stopped
@@ -158,6 +235,30 @@ services:
     networks:
       - radius-net
       - socket-proxy-net
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────────────────────────────
+  # RADIUS Load Generator (POC / demo traffic)
+  # Sends real Access-Request and Accounting packets to all 5 FreeRADIUS
+  # instances to populate dashboard charts and logs with realistic data.
+  # ──────────────────────────────────────────────────────────────────
+  loadgen:
+    build:
+      context: ./infra/loadgen
+      dockerfile: Dockerfile
+    depends_on:
+      - freeradius-prod1-a
+      - freeradius-prod1-b
+      - freeradius-prod2-a
+      - freeradius-prod2-b
+      - freeradius-test
+    environment:
+      RADIUS_SECRET: loadgen-secret
+      LOADGEN_INTERVAL: "5"           # seconds between batches
+      LOADGEN_AUTH_PER_BATCH: "3"     # auth requests per batch
+      LOADGEN_ACCT_PER_BATCH: "2"     # accounting stops per batch
+    networks:
+      - radius-net
     restart: unless-stopped
 
   # ──────────────────────────────────────────────────────────────────

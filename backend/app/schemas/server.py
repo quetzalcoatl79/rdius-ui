@@ -22,6 +22,9 @@ class ServerCreate(BaseModel):
     remote_user: Optional[str] = Field(default=None, max_length=100)
     remote_restart_cmd: Optional[str] = Field(default="sudo systemctl restart freeradius", max_length=500)
     remote_status_cmd: Optional[str] = Field(default="systemctl is-active freeradius", max_length=500)
+    cluster: Optional[str] = Field(default=None, max_length=50)
+    role: Optional[str] = Field(default="production", max_length=20)
+    capacity: Optional[int] = Field(default=None, ge=1)
     description: Optional[str] = None
 
     @model_validator(mode="after")
@@ -46,6 +49,9 @@ class ServerUpdate(BaseModel):
     remote_user: Optional[str] = Field(default=None, max_length=100)
     remote_restart_cmd: Optional[str] = Field(default=None, max_length=500)
     remote_status_cmd: Optional[str] = Field(default=None, max_length=500)
+    cluster: Optional[str] = Field(default=None, max_length=50)
+    role: Optional[str] = Field(default=None, max_length=20)
+    capacity: Optional[int] = Field(default=None, ge=1)
     description: Optional[str] = None
     is_active: Optional[bool] = None
 
@@ -60,6 +66,9 @@ class ServerResponse(BaseModel):
     remote_user: Optional[str]
     remote_restart_cmd: Optional[str]
     remote_status_cmd: Optional[str]
+    cluster: Optional[str]
+    role: Optional[str]
+    capacity: Optional[int]
     description: Optional[str]
     is_active: bool
     created_at: datetime

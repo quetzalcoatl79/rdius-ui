@@ -4,24 +4,40 @@ sql {
     dialect = "postgresql"
 
     # Connection settings — use environment variables injected by Docker Compose
-    server = "${POSTGRES_HOST}"
-    port = ${POSTGRES_PORT}
-    login = "${POSTGRES_USER}"
-    password = "${POSTGRES_PASSWORD}"
-    radius_db = "${POSTGRES_DB}"
+    # FreeRADIUS uses $ENV{} for environment variable substitution
+    server = "$ENV{POSTGRES_HOST}"
+    port = "$ENV{POSTGRES_PORT}"
+    login = "$ENV{POSTGRES_USER}"
+    password = "$ENV{POSTGRES_PASSWORD}"
+    radius_db = "$ENV{POSTGRES_DB}"
 
     # Target the radius schema — FreeRADIUS tables live in radius.* not public.*
-    # This is the critical dual-schema setting (see ARCHITECTURE.md)
-    schema = "radius"
+    # PostgreSQL search_path is set on every new connection via open_query
+    open_query = "SET search_path TO radius, public"
 
     # Read NAS clients from the nas table at startup
     # NOTE (CP-3): NAS changes require a full restart, NOT just HUP/reload
     read_clients = yes
     client_table = "nas"
 
-    # Use the default PostgreSQL query files from FreeRADIUS distribution
-    # These reference the correct PascalCase column names (UserName, not username)
-    # $INCLUDE ${modconfdir}/${.:name}/main/${dialect}/queries.conf
+    # Default table names used by the query file
+    acct_table1 = "radacct"
+    acct_table2 = "radacct"
+    postauth_table = "radpostauth"
+    authcheck_table = "radcheck"
+    authreply_table = "radreply"
+    groupcheck_table = "radgroupcheck"
+    groupreply_table = "radgroupreply"
+    usergroup_table = "radusergroup"
+
+    # Group-related settings
+    group_attribute = "SQL-Group"
+
+    # Delete stale session entries
+    delete_stale_sessions = yes
+
+    # Include the queries
+    $INCLUDE ${modconfdir}/${.:name}/main/${dialect}/queries.conf
 
     # Connection pool settings
     pool {

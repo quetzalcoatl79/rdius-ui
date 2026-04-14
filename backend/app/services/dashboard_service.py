@@ -113,7 +113,7 @@ class DashboardService:
         """
         result = await db.execute(
             text(
-                "SELECT nas_ip, shortname, bytes_in, bytes_out "
+                "SELECT host(nas_ip) AS nas_ip, shortname, bytes_in, bytes_out "
                 "FROM radius.mv_traffic_per_nas "
                 "ORDER BY bytes_in + bytes_out DESC"
             )
@@ -121,7 +121,7 @@ class DashboardService:
         rows = result.fetchall()
         return [
             TrafficPerNas(
-                nas_ip=row.nas_ip,
+                nas_ip=str(row.nas_ip),
                 shortname=row.shortname,
                 bytes_in=row.bytes_in,
                 bytes_out=row.bytes_out,

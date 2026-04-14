@@ -14,6 +14,9 @@ export interface ServerResponse {
   remote_user: string | null;
   remote_restart_cmd: string | null;
   remote_status_cmd: string | null;
+  cluster: string | null;
+  role: string | null;
+  capacity: number | null;
   description: string | null;
   is_active: boolean;
   created_at: string;

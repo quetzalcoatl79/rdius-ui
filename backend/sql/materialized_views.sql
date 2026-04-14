@@ -1,7 +1,5 @@
 -- Materialized views for dashboard metrics pre-aggregation (DASH-06)
--- Run this against PostgreSQL after the main schema is initialized.
--- These views are refreshed every 60 seconds by the background task in main.py.
---
+-- Refreshed every 60 seconds by the background task in main.py.
 -- NOTE: Column names are unquoted (lowercase) because PostgreSQL stores
 -- unquoted identifiers in lowercase regardless of CREATE TABLE casing.
 

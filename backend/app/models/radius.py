@@ -1,5 +1,6 @@
 # These models MAP to existing FreeRADIUS tables — they are never created or modified by Alembic
-# Python attributes use snake_case, mapped to lowercase column names via Column("colname", ...)
+# Python snake_case attributes → PostgreSQL lowercase columns (FreeRADIUS default behavior
+# when identifiers are NOT quoted in CREATE TABLE).
 from sqlalchemy import BigInteger, CHAR, Column, DateTime, Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.dialects.postgresql import INET
@@ -33,14 +34,14 @@ class Nas(RadiusBase):
     __tablename__ = "nas"
     __table_args__ = {"schema": "radius"}
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nasname = Column(Text, nullable=False)
-    shortname = Column(Text)
-    type = Column(Text, default="other")
+    nasname = Column(String(128), nullable=False)
+    shortname = Column(String(32))
+    type = Column(String(30), default="other")
     ports = Column(Integer)
-    secret = Column(Text, nullable=False, default="secret")
-    server = Column(Text)
-    community = Column(Text)
-    description = Column(Text)
+    secret = Column(String(60), nullable=False, default="secret")
+    server = Column(String(64))
+    community = Column(String(50))
+    description = Column(String(200))
 
 
 class RadGroupCheck(RadiusBase):
@@ -80,7 +81,7 @@ class RadAcct(RadiusBase):
     acct_unique_id = Column("acctuniqueid", String(32), nullable=False, default="")
     username = Column("username", String(64), nullable=False, default="")
     nas_ip_address = Column("nasipaddress", INET, nullable=False)
-    acct_start_time = Column("acctstarttime", DateTime(timezone=True), nullable=False)
+    acct_start_time = Column("acctstarttime", DateTime(timezone=True), nullable=True)
     acct_stop_time = Column("acctstoptime", DateTime(timezone=True), nullable=True)
     acct_session_time = Column("acctsessiontime", BigInteger)
     acct_input_octets = Column("acctinputoctets", BigInteger)
@@ -93,6 +94,6 @@ class RadPostAuth(RadiusBase):
     __table_args__ = {"schema": "radius"}
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     username = Column("username", String(64), nullable=False)
-    pass_ = Column("pass", String(64), nullable=False, default="")
-    reply = Column("reply", String(32), nullable=False, default="")
+    pass_ = Column("pass", String(64), nullable=True)
+    reply = Column("reply", String(32), nullable=True)
     authdate = Column("authdate", DateTime(timezone=True), nullable=False)

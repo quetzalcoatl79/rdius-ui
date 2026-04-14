@@ -42,6 +42,9 @@ class Server(AppBase):
     remote_user: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     remote_restart_cmd: Mapped[Optional[str]] = mapped_column(String(500), nullable=True, default="sudo systemctl restart freeradius")
     remote_status_cmd: Mapped[Optional[str]] = mapped_column(String(500), nullable=True, default="systemctl is-active freeradius")
+    cluster: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    role: Mapped[Optional[str]] = mapped_column(String(20), nullable=True, default="production")
+    capacity: Mapped[Optional[int]] = mapped_column(sa.Integer, nullable=True)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     created_at: Mapped[datetime] = mapped_column(
